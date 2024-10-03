@@ -4,6 +4,7 @@ package com.devesh.examportal.controller;
 import com.devesh.examportal.model.User;
 import com.devesh.examportal.model.UserDto;
 import com.devesh.examportal.service.SignUpService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class UserController {
     private SignUpService signUpService;
 
     @PostMapping(value = "/user/signup")
-    ResponseEntity<Object> registerUser(@RequestBody UserDto userDto) throws Exception {
+    ResponseEntity<Object> registerUser(@RequestBody @Valid UserDto userDto) throws Exception {
         log.info("Inside registerUser() of UserController.java : START");
         signUpService.registerUser(userDto);
         return new ResponseEntity<>("", HttpStatus.OK);

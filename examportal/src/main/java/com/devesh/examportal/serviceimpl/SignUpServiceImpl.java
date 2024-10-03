@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -32,23 +33,19 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public String registerUser(UserDto userDto) throws Exception {
         log.info("Inside the registerUser of SignUpServiceImpl.java : START");
-        Role r = new Role();
-        r.setId(2L);
-        r.setRoleName("Students");
-        roleRepository.save(r);
-        CountryCode countryCode = countryCodeRepository.findByCode(userDto.getCountryCode());
-//        if(countryCode == null){
-//            throw new Exception("Country Code is invalid");
-//        }
+        Optional<Role> r = roleRepository.findById(1L);
         User user = User.builder()
                 .userName(userDto.getUserName())
                 .email(userDto.getEmail())
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .password(userDto.getPassword())
-                .countryCode(countryCode)
+                .countryCode(1)
+                .rollNumber(userDto.getRollNumber())
                 .build();
-        UserRole userRole = new UserRole(2, user, r);
+        UserRole userRole = new UserRole();
+        userRole.setUser(user);
+        userRole.setRole(r.get());
         userRoleRepository.save(userRole);
         return "";
 

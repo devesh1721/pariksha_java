@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "email")
@@ -37,8 +37,8 @@ public class User {
     @Column(name = "roll_number")
     private String rollNumber;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private CountryCode countryCode;
+    @Column(name = "country_code")
+    private int countryCode;
 
     @OneToMany
     private List<UserRole> userRoles;
